@@ -3,9 +3,10 @@ Sung Soo Si Dea
 
 # Get Started
 - Gem Install
-    "`gem install sinatra"`
-    "`gem install instagram"`
-    "`gem install parse-ruby-client"`
+
+-    "`gem install sinatra"`
+-    "`gem install instagram"`
+-    "`gem install parse-ruby-client"`
 - Set up config YAML file
 "`
 parse:
