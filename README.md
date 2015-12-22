@@ -1,6 +1,11 @@
 # S3D
 Sung Soo Si Dea
 
+#Gem Install
+
+    gem install sinatra
+    gem install instagram
+
 # Get Started
 - Gem Install
 
