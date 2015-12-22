@@ -15,17 +15,6 @@ Sung Soo Si Dea
       callback_url: yourserver.com/oauth/callback
       client_id: YOUR_INSTAGRAM_CLIENT_ID
       client_secret: YOUR_INSTAGRAM_CLIENT_SECRET
-# Get Started
-- Gem Install
+#Run Server
 
--    "`gem install sinatra"`
--    "`gem install instagram"`
--    "`gem install parse-ruby-client"`
-- Set up config YAML file
-"`
-
-"`
-- Run Server
-"`
-ruby s3d.rb -o yourserver.com -p 8000
-"`
+    ruby s3d.rb -o yourserver.com -p 8000
