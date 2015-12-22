@@ -2,5 +2,5 @@
 Sung Soo Si Dea
 
 # Get Started
-## Gem Install
-\' gem install sinatra '\
+- Gem Installgem 
+    gem install sinatra
