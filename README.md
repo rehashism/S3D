@@ -2,7 +2,7 @@
 Sung Soo Si Dea
 
 # Get Started
-- Gem Install
+## Gem Install
 "'
 gem install sinatra
 gem install instagram
