@@ -18,3 +18,7 @@ Sung Soo Si Dea
 #Run Server
 
     ruby s3d.rb -o yourserver.com -p 8000
+
+#Run GoogleMap Web Page with Python
+
+    python -m SimpleHTTPServer
