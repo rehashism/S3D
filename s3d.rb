@@ -39,7 +39,8 @@ get "/nav" do
     """
     <ol>
     <li><a href='/parse_and_update_data'>Parse and Update Data</a></li>
-    <li><a href='/update_page'>Update Page</a><li>
+    <li><a href='/update_page'>Update Page</a></li>
+    <li><a href='/page_test'>Page Test</a></li>
     </ol>
     """
   html
@@ -48,23 +49,41 @@ end
 get "/parse_and_update_data" do
   client = Instagram.client(access_token: session[:access_token])
   tags = client.tag_search("현호시대")
-  client.tag_recent_media(tags[0].name).each do |media_item|
-    #Create Parse custom object(Media)
-    medium = Parse::Object.new("Media").tap do |item|
-      item["storeName"] = storeName(media_item)
-      item["thumbnailUrl"] = media_item.images.thumbnail.url
-      item["instaId"] = media_item.id
-      item["location"] = location(media_item)
+  tagRecentMedia = client.tag_recent_media(tags[0].name)
+  tagRecentMedia.each do |media_item|
+    # if already uploaded then stop the loop
+    if parseConfig["last_id"] >= media_item.id
+      break
     end
-    result = medium.save
+    
+    # create the new parse.com 'Media' object
+    parseObject = Parse::Object.new("Media").tap do |object|
+      object["storeName"] = storeName(media_item)
+      object["thumbnailUrl"] = media_item.images.thumbnail.url
+      object["instaId"] = media_item.id
+      object["location"] = location(media_item)
+    end
+    result = parseObject.save
     puts result
   end
-  html = "<h1> Parse and Update Data </h1>"
+
+  # write the last 'Media' object's instaId to clientConfig.yaml
+  configYaml["parse"]["last_id"] = tagRecentMedia[0].id
+  file = File.open("clientConfig.yaml", "w")
+  file.write(YAML.dump(configYaml))
+  file.close
+
+  html = "<h1> Done. </h1>"
   html
 end
 
 get "/update_page" do
   html = "<h1> Update Page </h1>"
+  html
+end
+
+get "/page_test" do
+  html = "<h1> #{parseConfig["last_id"]} </h1>"
   html
 end
 
