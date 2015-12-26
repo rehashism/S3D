@@ -1,0 +1,9 @@
+---
+parse:
+  application_id: YOUR_PARSE_APPLICATION_ID
+  api_key: YOUR_PARSE_API_KEY
+  last_id: '1142503942770148366_1375609880'
+instagram:
+  callback_url: yourpage.com/callback_url
+  client_id: YOUR_INSTAGRAM_CLIENT_ID
+  client_secret: YOUR_INSTAGRAM_CLIENT_SECRET
