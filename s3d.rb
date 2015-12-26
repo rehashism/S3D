@@ -11,7 +11,7 @@ instagram_config = config_yaml["instagram"]
 
 #Parse Client setup
 Parse.init(application_id: parse_config["application_id"],
-           rest_api_key: parse_config["api_key"])
+           api_key: parse_config["rest_api_key"])
 
 # Instagram Client setup
 enable :sessions
@@ -80,7 +80,7 @@ end
 
 get "/reset_page_data" do
   #load data.json file and delete media objects
-  json_text = JSON.parse(File.read("data.json"))
+  json_text = JSON.parse(get_data_json)
   json_text["mediaObject"].delete_if {|x| x}
   
   #get parse.com media objects and insert json_text
@@ -92,20 +92,30 @@ get "/reset_page_data" do
 
   #write data on data.json file
   file = File.open("data.json", 'w')
-  file.write(JSON.generate(json_text))
+  file.write(get_json_text(JSON.generate(json_text)))
   
   html = "<h1> Update Page </h1>"
   html
 end
 
 get "/page_test" do
-  json_text = JSON.parse(File.read("data.json"))
+  json_text = JSON.parse(get_data_json)
   json_text["mediaObject"].each do |a|
     puts a["storeName"]
   end
 
   html = "<h1> #{parse_config["last_id"]} </h1>"
   html
+end
+
+def get_data_json
+  json_text = File.read("./data.json")
+  json_text.delete(";")[7..-1]
+end
+
+#add 'data = ' and ';'
+def get_json_text(text)
+  text.insert(0, "data = ").insert(-1, ";")
 end
 
 def store_name(item)
