@@ -40,7 +40,7 @@ get "/nav" do
     """
     <ol>
     <li><a href='/parse_and_update_data'>Parse and Update Data</a></li>
-    <li><a href='/update_page'>Update Page</a></li>
+    <li><a href='/reset_page_data'>Reset Page Data</a></li>
     <li><a href='/page_test'>Page Test</a></li>
     </ol>
     """
@@ -68,8 +68,8 @@ get "/parse_and_update_data" do
     puts result
   end
 
-  # write the last 'Media' object's instaId to client_config.yaml
-  config_yaml["parse"]["last_id"] = tag_recent_media[0].id
+  # write the last 'Media' object's instaId on client_config.yaml
+  config_yaml["parse"]["last_id"] = tag_recent_media.first.id
   file = File.open("client_config.yaml", "w")
   file.write(YAML.dump(config_yaml))
   file.close
@@ -78,16 +78,32 @@ get "/parse_and_update_data" do
   html
 end
 
-get "/update_page" do
-  json_text = JSON.parse(File.read("text.json"))
+get "/reset_page_data" do
+  #load data.json file and delete media objects
+  json_text = JSON.parse(File.read("data.json"))
+  json_text["mediaObject"].delete_if {|x| x}
   
-  
+  #get parse.com media objects and insert json_text
+  media_object_query = Parse::Query.new("Media")
+  media_objects = media_object_query.get
+  media_objects.each do |object|
+    json_text["mediaObject"] << get_media_object_hash(object)
+  end
+
+  #write data on data.json file
+  file = File.open("data.json", 'w')
+  file.write(JSON.generate(json_text))
   
   html = "<h1> Update Page </h1>"
   html
 end
 
 get "/page_test" do
+  json_text = JSON.parse(File.read("data.json"))
+  json_text["mediaObject"].each do |a|
+    puts a["storeName"]
+  end
+
   html = "<h1> #{parse_config["last_id"]} </h1>"
   html
 end
@@ -98,6 +114,17 @@ def store_name(item)
   else
     item.caption.text.split("#")[2]
   end
+end
+
+def get_media_object_hash(media)
+  {
+    "storeName" => media["storeName"],
+    "thumbnailUrl" => media["thumbnailUrl"],
+    "location" => {
+      "lat" => media["location"].latitude,
+      "lng" => media["location"].longitude
+    }
+  }
 end
 
 def location(item)
