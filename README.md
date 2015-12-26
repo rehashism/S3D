@@ -10,7 +10,7 @@ Sung Soo Si Dea
 
     parse:
       application_id: YOUR_PARSE_APPLICATION_ID
-      api_key: YOUR_PARSE_APPLICATION_ID
+      api_key: YOUR_PARSE_REST_API_KEY
     instagram:
       callback_url: yourserver.com/oauth/callback
       client_id: YOUR_INSTAGRAM_CLIENT_ID
