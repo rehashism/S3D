@@ -11,7 +11,7 @@ instagram_config = config_yaml["instagram"]
 
 #Parse Client setup
 Parse.init(application_id: parse_config["application_id"],
-           api_key: parse_config["api_key"])
+           rest_api_key: parse_config["api_key"])
 
 # Instagram Client setup
 enable :sessions
