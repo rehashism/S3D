@@ -1,0 +1,9 @@
+---
+parse:
+  application_id: XVGZ145oVCgipcl6iXfapbmTdPU69BUshrdioxuS
+  api_key: ka5tDV5W8aRSRo5iYY90CIS928aOCYbbgzkaF5Eh
+  last_id: '1142503942770148366_1375609880'
+instagram:
+  callback_url: http://52.68.126.138:8000/oauth/callback
+  client_id: 9d430c15986b4ac7875d24f9cf461118
+  client_secret: ffad94a34b044cabae32fb2adb3e323c

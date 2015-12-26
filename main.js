@@ -32,18 +32,6 @@ function initMap() {
     }
   });
 
-  var testMarker = new google.maps.Marker({
-    map: map,
-    position: map.center
-  });
-
-  google.maps.event.addListener(testMarker, 'click', function() {
-    infowindow.setContent('<div><strong>' + 'Test' + '</strong><br>' +
-      'Place ID: ' + 'Test ID' + '<br>' + 
-      '<img src="https://scontent.cdninstagram.com/hphotos-xat1/t51.2885-15/s150x150/e35/12317486_1106539469379439_512835392_n.jpg"> ' + '</div>');
-    infowindow.open(map, this);
-  });
-
 }
 
 
